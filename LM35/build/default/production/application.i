@@ -14,7 +14,6 @@
 
 
 
-
 # 1 "./application.h" 1
 # 12 "./application.h"
 # 1 "./ECU_Layer/ecu_layer_init.h" 1
@@ -4846,26 +4845,89 @@ Std_ReturnType convert_uint32_to_string(uint32 value, uint8 *str);
 
 void ecu_layer_intialize(void);
 # 12 "./application.h" 2
-# 21 "./application.h"
-void application_intialize(void);
-# 9 "application.c" 2
 
-# 1 "./MCAL_Layer/ADC/hal_adc.h" 1
-# 15 "./MCAL_Layer/ADC/hal_adc.h"
-# 1 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_internal_interrupt.h" 1
-# 12 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_internal_interrupt.h"
-# 1 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_interrupt_config.h" 1
-# 15 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_interrupt_config.h"
-# 1 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_interrupt_gen_cfg.h" 1
-# 15 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_interrupt_config.h" 2
-# 54 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_interrupt_config.h"
+# 1 "./MCAL_Layer/Interrupt/mcal_external_interrupt.h" 1
+# 12 "./MCAL_Layer/Interrupt/mcal_external_interrupt.h"
+# 1 "./MCAL_Layer/Interrupt/mcal_interrupt_config.h" 1
+# 15 "./MCAL_Layer/Interrupt/mcal_interrupt_config.h"
+# 1 "./MCAL_Layer/Interrupt/mcal_interrupt_gen_cfg.h" 1
+# 15 "./MCAL_Layer/Interrupt/mcal_interrupt_config.h" 2
+# 54 "./MCAL_Layer/Interrupt/mcal_interrupt_config.h"
 typedef enum{
     INTERRUPT_LOW_PRIORITY = 0,
     INTERRUPT_HIGH_PRIORITY
 }interrupt_priority_cfg;
-# 12 "./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/mcal_internal_interrupt.h" 2
-# 15 "./MCAL_Layer/ADC/hal_adc.h" 2
+# 12 "./MCAL_Layer/Interrupt/mcal_external_interrupt.h" 2
+# 82 "./MCAL_Layer/Interrupt/mcal_external_interrupt.h"
+typedef void (*InterruptHandler)(void);
 
+typedef enum{
+    INTERRUPT_FALLING_EDGE = 0,
+    INTERRUPT_RISING_EDGE
+}interrupt_INTx_edge;
+
+typedef enum{
+    INTERRUPT_EXTERNAL_INT0 = 0,
+    INTERRUPT_EXTERNAL_INT1,
+    INTERRUPT_EXTERNAL_INT2
+}interrupt_INTx_src;
+
+typedef struct{
+    void (* EXT_InterruptHandler)(void);
+    pin_config_t mcu_pin;
+    interrupt_INTx_edge edge;
+    interrupt_INTx_src source;
+    interrupt_priority_cfg priority;
+}interrupt_INTx_t;
+
+typedef struct{
+    void (* EXT_InterruptHandler_HIGH)(void);
+    void (* EXT_InterruptHandler_LOW)(void);
+    pin_config_t mcu_pin;
+    interrupt_priority_cfg priority;
+}interrupt_RBx_t;
+
+
+
+
+
+
+
+Std_ReturnType Interrupt_INTx_Init(const interrupt_INTx_t *int_obj);
+
+
+
+
+
+
+Std_ReturnType Interrupt_INTx_DeInit(const interrupt_INTx_t *int_obj);
+
+
+
+
+
+
+Std_ReturnType Interrupt_RBx_Init(const interrupt_RBx_t *int_obj);
+
+
+
+
+
+
+Std_ReturnType Interrupt_RBx_DeInit(const interrupt_RBx_t *int_obj);
+# 13 "./application.h" 2
+
+# 1 "./MCAL_Layer/EEPROM/hal_eeprom.h" 1
+# 14 "./MCAL_Layer/EEPROM/hal_eeprom.h"
+# 1 "./MCAL_Layer/EEPROM/../../MCAL_Layer/Interrupt/mcal_internal_interrupt.h" 1
+# 14 "./MCAL_Layer/EEPROM/hal_eeprom.h" 2
+# 37 "./MCAL_Layer/EEPROM/hal_eeprom.h"
+Std_ReturnType Data_EEPROM_WriteByte(uint16 bAdd, uint8 bData);
+Std_ReturnType Data_EEPROM_ReadByte(uint16 bAdd, uint8 *bData);
+# 14 "./application.h" 2
+
+# 1 "./MCAL_Layer/ADC/hal_adc.h" 1
+# 16 "./MCAL_Layer/ADC/hal_adc.h"
 # 1 "./MCAL_Layer/ADC/hal_adc_cfg.h" 1
 # 16 "./MCAL_Layer/ADC/hal_adc.h" 2
 # 100 "./MCAL_Layer/ADC/hal_adc.h"
@@ -4943,139 +5005,228 @@ Std_ReturnType ADC_GetConversionResult(const adc_conf_t *_adc, adc_result_t *con
 Std_ReturnType ADC_GetConversion_Blocking(const adc_conf_t *_adc, adc_channel_select_t channel,
                                  adc_result_t *conversion_result);
 Std_ReturnType ADC_StartConversion_Interrupt(const adc_conf_t *_adc, adc_channel_select_t channel);
-# 10 "application.c" 2
+# 15 "./application.h" 2
 
-Std_ReturnType ret = (Std_ReturnType)0x00;
-volatile uint16 LM35;
-void WelcomingMessage();
-void adcInterruptHandeler();
-volatile uint8 adcArray[7];
+# 1 "./MCAL_Layer/CCP/ccp_cfg.h" 1
+# 16 "./application.h" 2
 
-chr_lcd_4bit_t lcd_1 =
-{
- .lcd_rs.port=PORTC_INDEX,
- .lcd_rs.pin=GPIO_PIN2,
- .lcd_rs.direction=GPIO_DIRECTION_OUTPUT,
- .lcd_rs.logic=GPIO_LOW,
-
-    .lcd_en.port=PORTC_INDEX,
- .lcd_en.pin=GPIO_PIN3,
- .lcd_en.direction=GPIO_DIRECTION_OUTPUT,
- .lcd_en.logic=GPIO_LOW,
-
-    .lcd_data[0].port=PORTC_INDEX,
- .lcd_data[0].pin=GPIO_PIN4,
- .lcd_data[0].direction=GPIO_DIRECTION_OUTPUT,
- .lcd_data[0].logic=GPIO_LOW,
-
-    .lcd_data[1].port=PORTC_INDEX,
- .lcd_data[1].pin=GPIO_PIN5,
- .lcd_data[1].direction=GPIO_DIRECTION_OUTPUT,
- .lcd_data[1].logic=GPIO_LOW,
-
-    .lcd_data[2].port=PORTC_INDEX,
- .lcd_data[2].pin=GPIO_PIN6,
- .lcd_data[2].direction=GPIO_DIRECTION_OUTPUT,
- .lcd_data[2].logic=GPIO_LOW,
-
-    .lcd_data[3].port=PORTC_INDEX,
- .lcd_data[3].pin=GPIO_PIN7,
- .lcd_data[3].direction=GPIO_DIRECTION_OUTPUT,
- .lcd_data[3].logic=GPIO_LOW,
-
-};
-
-
-dc_motor_t motor_1 =
-{
-    .dc_motor_pin[0].port = PORTD_INDEX,
-    .dc_motor_pin[0].pin = GPIO_PIN0,
-    .dc_motor_pin[0].logic = GPIO_LOW,
-    .dc_motor_pin[0].direction = GPIO_DIRECTION_OUTPUT,
-    .dc_motor_pin[1].port = PORTD_INDEX,
-    .dc_motor_pin[1].pin = GPIO_PIN1,
-    .dc_motor_pin[1].logic = GPIO_LOW,
-    .dc_motor_pin[1].direction = GPIO_DIRECTION_OUTPUT
-};
-
-
-dc_motor_t motor_2 =
-{
-    .dc_motor_pin[0].port = PORTD_INDEX,
-    .dc_motor_pin[0].pin = GPIO_PIN2,
-    .dc_motor_pin[0].logic = GPIO_LOW,
-    .dc_motor_pin[0].direction = GPIO_DIRECTION_OUTPUT,
-    .dc_motor_pin[1].port = PORTD_INDEX,
-    .dc_motor_pin[1].pin = GPIO_PIN3,
-    .dc_motor_pin[1].logic = GPIO_LOW,
-    .dc_motor_pin[1].direction = GPIO_DIRECTION_OUTPUT
-};
+# 1 "./MCAL_Layer/CCP/hal_ccp.h" 1
+# 74 "./MCAL_Layer/CCP/hal_ccp.h"
+typedef enum{
+    CCP_CAPTURE_MODE_SELECTED = 0,
+    CCP_COMPARE_MODE_SELECTED,
+    CCP_PWM_MODE_SELECTED
+}ccp1_mode_t;
 
 
 
-adc_conf_t adc_1 =
-{
-    .ADC_InterruptHandler = adcInterruptHandeler,
-    .acquisition_time = ADC_12_TAD,
-    .adc_channel = ADC_CHANNEL_AN0,
-    .conversion_clock = ADC_CONVERSION_CLOCK_FOSC_DIV_16,
-    .result_format = 0x01U,
-    .voltage_reference = 0x00U
-};
+
+
+typedef union{
+    struct{
+        uint8 ccpr_low;
+        uint8 ccpr_high;
+    };
+    struct{
+        uint16 ccpr_16Bit;
+    };
+}CCP_REG_T;
+
+typedef enum{
+    CCP1_INST = 0,
+    CCP2_INST
+}ccp_inst_t;
+
+typedef enum{
+    CCP1_CCP2_TIMER3 = 0,
+    CCP1_TIMER1_CCP2_TIMER3,
+    CCP1_CCP2_TIMER1
+}ccp_capture_timer_t;
 
 
 
-int main()
-{
+
+
+typedef struct{
+    ccp_inst_t ccp_inst;
+    ccp1_mode_t ccp_mode;
+    uint8 ccp_mode_variant;
+    pin_config_t ccp_pin;
+    ccp_capture_timer_t ccp_capture_timer;
+
+    uint32 PWM_Frequency;
+    uint8 timer2_postscaler_value;
+    uint8 timer2_prescaler_value;
+
+
+    void (* CCP1_InterruptHandler)(void);
+    interrupt_priority_cfg CCP1_priority;
+
+
+    void (* CCP2_InterruptHandler)(void);
+    interrupt_priority_cfg CCP2_priority;
+
+}ccp_t;
+
+
+Std_ReturnType CCP_Init(const ccp_t *_ccp_obj);
+Std_ReturnType CCP_DeInit(const ccp_t *_ccp_obj);
+# 145 "./MCAL_Layer/CCP/hal_ccp.h"
+Std_ReturnType CCP_PWM_Set_Duty(const ccp_t *_ccp_obj, const uint8 _duty);
+Std_ReturnType CCP_PWM_Start(const ccp_t *_ccp_obj);
+Std_ReturnType CCP_PWM_Stop(const ccp_t *_ccp_obj);
+# 17 "./application.h" 2
+
+# 1 "./MCAL_Layer/Timer0/hal_timr0.h" 1
+# 44 "./MCAL_Layer/Timer0/hal_timr0.h"
+typedef enum{
+    TIMER0_PRESCALER_DIV_BY_2= 0,
+    TIMER0_PRESCALER_DIV_BY_4,
+    TIMER0_PRESCALER_DIV_BY_8,
+    TIMER0_PRESCALER_DIV_BY_16,
+    TIMER0_PRESCALER_DIV_BY_32,
+    TIMER0_PRESCALER_DIV_BY_64,
+    TIMER0_PRESCALER_DIV_BY_128,
+    TIMER0_PRESCALER_DIV_BY_256
+}timer0_prescaler_select_t;
+
+typedef struct{
+
+    void (* TMR0_InterruptHandler)(void);
+    interrupt_priority_cfg priority;
+
+    timer0_prescaler_select_t prescaler_value;
+    uint16 timer0_preload_value;
+    uint8 prescaler_enable : 1;
+    uint8 timer0_counter_edge : 1;
+    uint8 timer0_mode : 1;
+    uint8 timer0_register_size : 1;
+    uint8 timer0_reserved : 4;
+}timer0_t;
+
+
+Std_ReturnType Timer0_Init(const timer0_t *_timer);
+Std_ReturnType Timer0_DeInit(const timer0_t *_timer);
+Std_ReturnType Timer0_Write_Value(const timer0_t *_timer, uint16 _value);
+Std_ReturnType Timer0_Read_Value(const timer0_t *_timer, uint16 *_value);
+# 18 "./application.h" 2
+
+# 1 "./MCAL_Layer/Timer1/hal_timr1.h" 1
+# 60 "./MCAL_Layer/Timer1/hal_timr1.h"
+typedef struct{
+
+    void (* TMR1_InterruptHandler)(void);
+    interrupt_priority_cfg priority;
+
+    uint16 timer1_preload_value;
+    uint8 timer1_prescaler_value : 2;
+    uint8 timer1_mode : 1;
+    uint8 timer1_counter_mode : 1;
+    uint8 timer1_osc_cfg : 1;
+    uint8 timer1_reg_wr_mode : 1;
+    uint8 timer1_reserved : 2;
+}timer1_t;
+
+
+Std_ReturnType Timer1_Init(const timer1_t *_timer);
+Std_ReturnType Timer1_DeInit(const timer1_t *_timer);
+Std_ReturnType Timer1_Write_Value(const timer1_t *_timer, uint16 _value);
+Std_ReturnType Timer1_Read_Value(const timer1_t *_timer, uint16 *_value);
+# 19 "./application.h" 2
+
+# 1 "./MCAL_Layer/Timer2/hal_timr2.h" 1
+# 53 "./MCAL_Layer/Timer2/hal_timr2.h"
+typedef struct{
+
+    void (* TMR2_InterruptHandler)(void);
+    interrupt_priority_cfg priority;
+
+    uint8 timer2_preload_value;
+    uint8 timer2_postscaler_value;
+    uint8 timer2_prescaler_value;
+}timer2_t;
+
+
+Std_ReturnType Timer2_Init(const timer2_t *_timer);
+Std_ReturnType Timer2_DeInit(const timer2_t *_timer);
+Std_ReturnType Timer2_Write_Value(const timer2_t *_timer, uint8 _value);
+Std_ReturnType Timer2_Read_Value(const timer2_t *_timer, uint8 *_value);
+# 20 "./application.h" 2
+
+# 1 "./MCAL_Layer/Timer3/hal_timr3.h" 1
+# 50 "./MCAL_Layer/Timer3/hal_timr3.h"
+typedef struct{
+
+    void (* TMR3_InterruptHandler)(void);
+    interrupt_priority_cfg priority;
+
+    uint16 timer3_preload_value;
+    uint8 timer3_prescaler_value : 2;
+    uint8 timer3_mode : 1;
+    uint8 timer3_counter_mode : 1;
+    uint8 timer3_reg_wr_mode : 1;
+    uint8 timer1_reserved : 3;
+}timer3_t;
+
+
+Std_ReturnType Timer3_Init(const timer3_t *_timer);
+Std_ReturnType Timer3_DeInit(const timer3_t *_timer);
+Std_ReturnType Timer3_Write_Value(const timer3_t *_timer, uint16 _value);
+Std_ReturnType Timer3_Read_Value(const timer3_t *_timer, uint16 *_value);
+# 21 "./application.h" 2
+# 30 "./application.h"
+void application_intialize(void);
+# 8 "application.c" 2
+
+
+
+timer3_t timer3_obj;
+ccp_t ccp_obj;
+
+volatile uint8 CCP1_Second_Copture_Flag = 0;
+uint16 Second_Copture = 0;
+volatile uint32 Timer3_OverFlow = 0;
+uint32 Total_Period_MicroSecond = 0;
+uint32 Freq = 0;
+
+void CCP1_DefaultInterruptHandler(void){
+
+}
+
+void Timer3_DefaultInterruptHandler(void){
+    Timer3_OverFlow++;
+}
+
+int main() {
+    Std_ReturnType ret = (Std_ReturnType)0x00;
+
     application_intialize();
-    WelcomingMessage();
-    ret = lcd_4bit_send_string_pos(&lcd_1, 2, 1, "Temperature is : ");
-    while(1)
-    {
-        ret = ADC_StartConversion(&adc_1);
+
+    ccp_obj.CCP1_InterruptHandler = CCP1_DefaultInterruptHandler;
+    ccp_obj.ccp_inst = CCP1_INST;
+    ccp_obj.ccp_mode = CCP_CAPTURE_MODE_SELECTED;
+    ccp_obj.ccp_mode_variant = ((uint8)0x05);
+    ccp_obj.ccp_capture_timer = CCP1_CCP2_TIMER3;
+    ccp_obj.ccp_pin.port = PORTC_INDEX;
+    ccp_obj.ccp_pin.pin = GPIO_PIN2;
+    ccp_obj.ccp_pin.direction = GPIO_DIRECTION_INPUT;
+    ret = CCP_Init(&ccp_obj);
+
+    timer3_obj.TMR3_InterruptHandler = Timer3_DefaultInterruptHandler;
+    timer3_obj.timer3_mode = 0;
+    timer3_obj.priority = INTERRUPT_LOW_PRIORITY;
+    timer3_obj.timer3_prescaler_value = 0;
+    timer3_obj.timer3_preload_value = 0;
+    timer3_obj.timer3_reg_wr_mode = 0;
+    ret = Timer3_Init(&timer3_obj);
+
+    while(1){
 
     }
     return (0);
 }
 
-
-
-
-void WelcomingMessage()
-{
-    ret = lcd_4bit_send_string_pos(&lcd_1, 2, 7, "Welcome.");
-    _delay((unsigned long)((1000)*(4000000UL/4000.0)));
-    ret = lcd_4bit_send_command(&lcd_1, 0X01);
-}
-
-void application_intialize()
-{
-    ret = lcd_4bit_intialize(&lcd_1);
-    ret = dc_motor_initialize(&motor_1);
-    ret = dc_motor_initialize(&motor_2);
-    ret = ADC_Init(&adc_1);
-}
-
-
-void adcInterruptHandeler()
-{
-    ret = ADC_GetConversionResult(&adc_1, &LM35);
-    LM35 *= 0.4888f;
-    ret = convert_uint8_to_string(LM35, &adcArray);
-    ret = lcd_4bit_send_string_pos(&lcd_1, 2, 18, &adcArray);
-    if(LM35 < 20)
-    {
-        ret = dc_motor_move_right(&motor_1);
-        ret = dc_motor_move_left(&motor_2);
-    }
-    else if(LM35 > 30)
-    {
-        ret = dc_motor_move_right(&motor_2);
-        ret = dc_motor_move_left(&motor_1);
-    }
-    else
-    {
-        ret = dc_motor_stop(&motor_1);
-        ret = dc_motor_stop(&motor_2);
-    }
+void application_intialize(void){
+    Std_ReturnType ret = (Std_ReturnType)0x00;
+    ecu_layer_intialize();
 }

@@ -1,9 +1,10 @@
 /* 
- * File:   ecu_layer_init.c
- * Author: Ahmed.Elghafar
- * https://www.linkedin.com/in/ahmedabdelghafarmohammed/
- * Created on February 7, 2021, 10:39 PM
+ * File:   ecu_seven_segment.c
+ * Author: Mohamed_Nagy
+ * https://www.linkedin.com/in/mohamednagyofficial/
+ * Created on January 27, 2022, 8:41 PM
  */
+ 
 
 #include "ecu_layer_init.h"
 

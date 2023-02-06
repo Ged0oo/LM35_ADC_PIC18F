@@ -1,88 +1,57 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"66 ./MCAL_Layer/ADC/../../MCAL_Layer/Interrupt/../../MCAL_Layer/GPIO/hal_gpio.h
+[v F3383 `(v ~T0 @X0 0 tf ]
+"11 application.c
+[; ;application.c: 11: timer3_t timer3_obj;
+[c E3146 0 1 .. ]
+[n E3146 . INTERRUPT_LOW_PRIORITY INTERRUPT_HIGH_PRIORITY  ]
+"50 ./MCAL_Layer/Timer3/hal_timr3.h
+[; ;./MCAL_Layer/Timer3/hal_timr3.h: 50: typedef struct{
+[s S292 `*F3383 1 `E3146 1 `us 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 ]
+[n S292 . TMR3_InterruptHandler priority timer3_preload_value timer3_prescaler_value timer3_mode timer3_counter_mode timer3_reg_wr_mode timer1_reserved ]
+"12 application.c
+[; ;application.c: 12: ccp_t ccp_obj;
+[c E3273 0 1 .. ]
+[n E3273 . CCP1_INST CCP2_INST  ]
+[c E3259 0 1 2 .. ]
+[n E3259 . CCP_CAPTURE_MODE_SELECTED CCP_COMPARE_MODE_SELECTED CCP_PWM_MODE_SELECTED  ]
+"66 ./MCAL_Layer/Timer3/../../MCAL_Layer/GPIO/hal_gpio.h
 [s S273 :3 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S273 . port pin direction logic ]
-"45 ./ECU_Layer/Chr_LCD/ecu_chr_lcd.h
-[; ;./ECU_Layer/Chr_LCD/ecu_chr_lcd.h: 45: typedef struct{
-[s S280 `S273 1 `S273 1 `S273 -> 4 `i ]
-[n S280 . lcd_rs lcd_en lcd_data ]
-"17 application.c
-[; ;application.c: 17: chr_lcd_4bit_t lcd_1 =
+"12 application.c
+[; ;application.c: 12: ccp_t ccp_obj;
+[c E3277 0 1 2 .. ]
+[n E3277 . CCP1_CCP2_TIMER3 CCP1_TIMER1_CCP2_TIMER3 CCP1_CCP2_TIMER1  ]
+[v F3292 `(v ~T0 @X0 0 tf ]
+[v F3295 `(v ~T0 @X0 0 tf ]
+"109 ./MCAL_Layer/CCP/hal_ccp.h
+[; ;./MCAL_Layer/CCP/hal_ccp.h: 109: typedef struct{
+[s S288 `E3273 1 `E3259 1 `uc 1 `S273 1 `E3277 1 `ul 1 `uc 1 `uc 1 `*F3292 1 `E3146 1 `*F3295 1 `E3146 1 ]
+[n S288 . ccp_inst ccp_mode ccp_mode_variant ccp_pin ccp_capture_timer PWM_Frequency timer2_postscaler_value timer2_prescaler_value CCP1_InterruptHandler CCP1_priority CCP2_InterruptHandler CCP2_priority ]
+[p mainexit ]
+"30 ./application.h
+[; ;./application.h: 30: void application_intialize(void);
+[v _application_intialize `(v ~T0 @X0 0 ef ]
+"38 application.c
+[; ;application.c: 38:     ccp_obj.ccp_pin.port = PORTC_INDEX;
 [c E2951 0 1 2 3 4 .. ]
 [n E2951 . PORTA_INDEX PORTB_INDEX PORTC_INDEX PORTD_INDEX PORTE_INDEX  ]
+"39
+[; ;application.c: 39:     ccp_obj.ccp_pin.pin = GPIO_PIN2;
 [c E2941 0 1 2 3 4 5 6 7 .. ]
 [n E2941 . GPIO_PIN0 GPIO_PIN1 GPIO_PIN2 GPIO_PIN3 GPIO_PIN4 GPIO_PIN5 GPIO_PIN6 GPIO_PIN7  ]
+"40
+[; ;application.c: 40:     ccp_obj.ccp_pin.direction = GPIO_DIRECTION_INPUT;
 [c E2937 0 1 .. ]
 [n E2937 . GPIO_DIRECTION_OUTPUT GPIO_DIRECTION_INPUT  ]
-[c E2933 0 1 .. ]
-[n E2933 . GPIO_LOW GPIO_HIGH  ]
-"25 ./ECU_Layer/DC_Motor/ecu_dc_motor.h
-[; ;./ECU_Layer/DC_Motor/ecu_dc_motor.h: 25: typedef struct{
-[s S277 `S273 -> 2 `i ]
-[n S277 . dc_motor_pin ]
-[v F3187 `(v ~T0 @X0 0 tf ]
-"79 application.c
-[; ;application.c: 79: adc_conf_t adc_1 =
-[c E3147 0 1 .. ]
-[n E3147 . INTERRUPT_LOW_PRIORITY INTERRUPT_HIGH_PRIORITY  ]
-[c E3166 0 1 2 3 4 5 6 7 .. ]
-[n E3166 . ADC_0_TAD ADC_2_TAD ADC_4_TAD ADC_6_TAD ADC_8_TAD ADC_12_TAD ADC_16_TAD ADC_20_TAD  ]
-[c E3176 0 1 2 3 4 5 6 .. ]
-[n E3176 . ADC_CONVERSION_CLOCK_FOSC_DIV_2 ADC_CONVERSION_CLOCK_FOSC_DIV_8 ADC_CONVERSION_CLOCK_FOSC_DIV_32 ADC_CONVERSION_CLOCK_FOSC_DIV_FRC ADC_CONVERSION_CLOCK_FOSC_DIV_4 ADC_CONVERSION_CLOCK_FOSC_DIV_16 ADC_CONVERSION_CLOCK_FOSC_DIV_64  ]
-[c E3151 0 1 2 3 4 5 6 7 8 9 10 11 12 .. ]
-[n E3151 . ADC_CHANNEL_AN0 ADC_CHANNEL_AN1 ADC_CHANNEL_AN2 ADC_CHANNEL_AN3 ADC_CHANNEL_AN4 ADC_CHANNEL_AN5 ADC_CHANNEL_AN6 ADC_CHANNEL_AN7 ADC_CHANNEL_AN8 ADC_CHANNEL_AN9 ADC_CHANNEL_AN10 ADC_CHANNEL_AN11 ADC_CHANNEL_AN12  ]
-"153 ./MCAL_Layer/ADC/hal_adc.h
-[; ;./MCAL_Layer/ADC/hal_adc.h: 153: typedef struct{
-[s S282 `*F3187 1 `E3147 1 `E3166 1 `E3176 1 `E3151 1 :1 `uc 1 :1 `uc 1 :6 `uc 1 ]
-[n S282 . ADC_InterruptHandler priority acquisition_time conversion_clock adc_channel voltage_reference result_format ADC_Reserved ]
-"14 application.c
-[; ;application.c: 14: void adcInterruptHandeler();
-[v _adcInterruptHandeler `(v ~T0 @X0 0 e? ]
-[v F3228 `(v ~T0 @X0 0 tf ]
-[p mainexit ]
-"21 ./application.h
-[; ;./application.h: 21: void application_intialize(void);
-[v _application_intialize `(v ~T0 @X0 0 ef ]
-"13 application.c
-[; ;application.c: 13: void WelcomingMessage();
-[v _WelcomingMessage `(v ~T0 @X0 0 e? ]
-"63 ./ECU_Layer/Chr_LCD/ecu_chr_lcd.h
-[; ;./ECU_Layer/Chr_LCD/ecu_chr_lcd.h: 63: Std_ReturnType lcd_4bit_send_string_pos(const chr_lcd_4bit_t *lcd, uint8 row, uint8 column, uint8 *str);
-[v _lcd_4bit_send_string_pos `(uc ~T0 @X0 0 ef4`*CS280`uc`uc`*uc ]
-"175 ./MCAL_Layer/ADC/hal_adc.h
-[; ;./MCAL_Layer/ADC/hal_adc.h: 175: Std_ReturnType ADC_StartConversion(const adc_conf_t *_adc);
-[v _ADC_StartConversion `(uc ~T0 @X0 0 ef1`*CS282 ]
-[v F2918 `(v ~T0 @X0 1 tf1`ul ]
-"203 C:/Users/mohmm/.mchp_packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\pic18.h
-[v __delay `JF2918 ~T0 @X0 0 e ]
-[p i __delay ]
-"59 ./ECU_Layer/Chr_LCD/ecu_chr_lcd.h
-[; ;./ECU_Layer/Chr_LCD/ecu_chr_lcd.h: 59: Std_ReturnType lcd_4bit_send_command(const chr_lcd_4bit_t *lcd, uint8 command);
-[v _lcd_4bit_send_command `(uc ~T0 @X0 0 ef2`*CS280`uc ]
-"58
-[; ;./ECU_Layer/Chr_LCD/ecu_chr_lcd.h: 58: Std_ReturnType lcd_4bit_intialize(const chr_lcd_4bit_t *lcd);
-[v _lcd_4bit_intialize `(uc ~T0 @X0 0 ef1`*CS280 ]
-"30 ./ECU_Layer/DC_Motor/ecu_dc_motor.h
-[; ;./ECU_Layer/DC_Motor/ecu_dc_motor.h: 30: Std_ReturnType dc_motor_initialize(const dc_motor_t *_dc_motor);
-[v _dc_motor_initialize `(uc ~T0 @X0 0 ef1`*CS277 ]
-"172 ./MCAL_Layer/ADC/hal_adc.h
-[; ;./MCAL_Layer/ADC/hal_adc.h: 172: Std_ReturnType ADC_Init(const adc_conf_t *_adc);
-[v _ADC_Init `(uc ~T0 @X0 0 ef1`*CS282 ]
-"177
-[; ;./MCAL_Layer/ADC/hal_adc.h: 177: Std_ReturnType ADC_GetConversionResult(const adc_conf_t *_adc, adc_result_t *conversion_result);
-[v _ADC_GetConversionResult `(uc ~T0 @X0 0 ef2`*CS282`*us ]
-"76 ./ECU_Layer/Chr_LCD/ecu_chr_lcd.h
-[; ;./ECU_Layer/Chr_LCD/ecu_chr_lcd.h: 76: Std_ReturnType convert_uint8_to_string(uint8 value, uint8 *str);
-[v _convert_uint8_to_string `(uc ~T0 @X0 0 ef2`uc`*uc ]
-"31 ./ECU_Layer/DC_Motor/ecu_dc_motor.h
-[; ;./ECU_Layer/DC_Motor/ecu_dc_motor.h: 31: Std_ReturnType dc_motor_move_right(const dc_motor_t *_dc_motor);
-[v _dc_motor_move_right `(uc ~T0 @X0 0 ef1`*CS277 ]
-"32
-[; ;./ECU_Layer/DC_Motor/ecu_dc_motor.h: 32: Std_ReturnType dc_motor_move_left(const dc_motor_t *_dc_motor);
-[v _dc_motor_move_left `(uc ~T0 @X0 0 ef1`*CS277 ]
-"33
-[; ;./ECU_Layer/DC_Motor/ecu_dc_motor.h: 33: Std_ReturnType dc_motor_stop(const dc_motor_t *_dc_motor);
-[v _dc_motor_stop `(uc ~T0 @X0 0 ef1`*CS277 ]
+"131 ./MCAL_Layer/CCP/hal_ccp.h
+[; ;./MCAL_Layer/CCP/hal_ccp.h: 131: Std_ReturnType CCP_Init(const ccp_t *_ccp_obj);
+[v _CCP_Init `(uc ~T0 @X0 0 ef1`*CS288 ]
+"64 ./MCAL_Layer/Timer3/hal_timr3.h
+[; ;./MCAL_Layer/Timer3/hal_timr3.h: 64: Std_ReturnType Timer3_Init(const timer3_t *_timer);
+[v _Timer3_Init `(uc ~T0 @X0 0 ef1`*CS292 ]
+"19 ./ECU_Layer/ecu_layer_init.h
+[; ;./ECU_Layer/ecu_layer_init.h: 19: void ecu_layer_intialize(void);
+[v _ecu_layer_intialize `(v ~T0 @X0 0 ef ]
 "54 C:/Users/mohmm/.mchp_packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f4620.h
 [; ;C:/Users/mohmm/.mchp_packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f4620.h: 54: __asm("PORTA equ 0F80h");
 [; <" PORTA equ 0F80h ;# ">
@@ -495,289 +464,158 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;C:/Users/mohmm/.mchp_packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f4620.h: 6715: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
 "11 application.c
-[; ;application.c: 11: Std_ReturnType ret = (Std_ReturnType)0x00;
-[v _ret `uc ~T0 @X0 1 e ]
-[i _ret
+[; ;application.c: 11: timer3_t timer3_obj;
+[v _timer3_obj `S292 ~T0 @X0 1 e ]
+"12
+[; ;application.c: 12: ccp_t ccp_obj;
+[v _ccp_obj `S288 ~T0 @X0 1 e ]
+"14
+[; ;application.c: 14: volatile uint8 CCP1_Second_Copture_Flag = 0;
+[v _CCP1_Second_Copture_Flag `Vuc ~T0 @X0 1 e ]
+[i _CCP1_Second_Copture_Flag
 -> -> 0 `i `uc
 ]
-"12
-[; ;application.c: 12: volatile uint16 LM35;
-[v _LM35 `Vus ~T0 @X0 1 e ]
 "15
-[; ;application.c: 15: volatile uint8 adcArray[7];
-[v _adcArray `Vuc ~T0 @X0 -> 7 `i e ]
+[; ;application.c: 15: uint16 Second_Copture = 0;
+[v _Second_Copture `us ~T0 @X0 1 e ]
+[i _Second_Copture
+-> -> 0 `i `us
+]
+"16
+[; ;application.c: 16: volatile uint32 Timer3_OverFlow = 0;
+[v _Timer3_OverFlow `Vul ~T0 @X0 1 e ]
+[i _Timer3_OverFlow
+-> -> -> 0 `i `l `ul
+]
 "17
-[; ;application.c: 17: chr_lcd_4bit_t lcd_1 =
-[v _lcd_1 `S280 ~T0 @X0 1 e ]
-[i _lcd_1
-:U ..
-:U ..
-:U ..
-:U ..
--> . `E2951 2 `uc
--> . `E2941 2 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-..
-:U ..
-:U ..
--> . `E2951 2 `uc
--> . `E2941 3 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-..
-:U ..
-:U ..
--> . `E2951 2 `uc
--> . `E2941 4 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-:U ..
--> . `E2951 2 `uc
--> . `E2941 5 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-:U ..
--> . `E2951 2 `uc
--> . `E2941 6 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-:U ..
--> . `E2951 2 `uc
--> . `E2941 7 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-..
-..
-..
+[; ;application.c: 17: uint32 Total_Period_MicroSecond = 0;
+[v _Total_Period_MicroSecond `ul ~T0 @X0 1 e ]
+[i _Total_Period_MicroSecond
+-> -> -> 0 `i `l `ul
 ]
-"52
-[; ;application.c: 52: dc_motor_t motor_1 =
-[v _motor_1 `S277 ~T0 @X0 1 e ]
-[i _motor_1
-:U ..
-:U ..
-:U ..
-:U ..
--> . `E2951 3 `uc
--> . `E2941 0 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-:U ..
--> . `E2951 3 `uc
--> . `E2941 1 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-..
-..
-..
+"18
+[; ;application.c: 18: uint32 Freq = 0;
+[v _Freq `ul ~T0 @X0 1 e ]
+[i _Freq
+-> -> -> 0 `i `l `ul
 ]
-"65
-[; ;application.c: 65: dc_motor_t motor_2 =
-[v _motor_2 `S277 ~T0 @X0 1 e ]
-[i _motor_2
-:U ..
-:U ..
-:U ..
-:U ..
--> . `E2951 3 `uc
--> . `E2941 2 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-:U ..
--> . `E2951 3 `uc
--> . `E2941 3 `uc
--> . `E2937 0 `uc
--> . `E2933 0 `uc
-..
-..
-..
-..
-]
-"79
-[; ;application.c: 79: adc_conf_t adc_1 =
-[v _adc_1 `S282 ~T0 @X0 1 e ]
-[i _adc_1
-:U ..
-:U ..
--> &U _adcInterruptHandeler `*F3228
--> -> 0 `i `E3147
-. `E3166 5
-. `E3176 5
-. `E3151 0
--> -> 0 `ui `uc
--> -> 1 `ui `uc
-..
-..
-]
+"20
+[; ;application.c: 20: void CCP1_DefaultInterruptHandler(void){
+[v _CCP1_DefaultInterruptHandler `(v ~T0 @X0 1 ef ]
+{
+[e :U _CCP1_DefaultInterruptHandler ]
+[f ]
+"22
+[; ;application.c: 22: }
+[e :UE 293 ]
+}
+"24
+[; ;application.c: 24: void Timer3_DefaultInterruptHandler(void){
+[v _Timer3_DefaultInterruptHandler `(v ~T0 @X0 1 ef ]
+{
+[e :U _Timer3_DefaultInterruptHandler ]
+[f ]
+"25
+[; ;application.c: 25:     Timer3_OverFlow++;
+[e ++ _Timer3_OverFlow -> -> 1 `i `Vul ]
+"26
+[; ;application.c: 26: }
+[e :UE 294 ]
+}
 [v $root$_main `(v ~T0 @X0 0 e ]
-"91
-[; ;application.c: 91: int main()
+"28
+[; ;application.c: 28: int main() {
 [v _main `(i ~T0 @X0 1 ef ]
-"92
-[; ;application.c: 92: {
 {
 [e :U _main ]
 [f ]
-"93
-[; ;application.c: 93:     application_intialize();
+"29
+[; ;application.c: 29:     Std_ReturnType ret = (Std_ReturnType)0x00;
+[v _ret `uc ~T0 @X0 1 a ]
+[e = _ret -> -> 0 `i `uc ]
+"31
+[; ;application.c: 31:     application_intialize();
 [e ( _application_intialize ..  ]
-"94
-[; ;application.c: 94:     WelcomingMessage();
-[e ( _WelcomingMessage ..  ]
-"95
-[; ;application.c: 95:     ret = lcd_4bit_send_string_pos(&lcd_1, 2, 1, "Temperature is : ");
-[e = _ret ( _lcd_4bit_send_string_pos (4 , , , -> &U _lcd_1 `*CS280 -> -> 2 `i `uc -> -> 1 `i `uc :s 1C ]
-"96
-[; ;application.c: 96:     while(1)
-[e :U 285 ]
-"97
-[; ;application.c: 97:     {
+"33
+[; ;application.c: 33:     ccp_obj.CCP1_InterruptHandler = CCP1_DefaultInterruptHandler;
+[e = . _ccp_obj 8 &U _CCP1_DefaultInterruptHandler ]
+"34
+[; ;application.c: 34:     ccp_obj.ccp_inst = CCP1_INST;
+[e = . _ccp_obj 0 . `E3273 0 ]
+"35
+[; ;application.c: 35:     ccp_obj.ccp_mode = CCP_CAPTURE_MODE_SELECTED;
+[e = . _ccp_obj 1 . `E3259 0 ]
+"36
+[; ;application.c: 36:     ccp_obj.ccp_mode_variant = ((uint8)0x05);
+[e = . _ccp_obj 2 -> -> 5 `i `uc ]
+"37
+[; ;application.c: 37:     ccp_obj.ccp_capture_timer = CCP1_CCP2_TIMER3;
+[e = . _ccp_obj 4 . `E3277 0 ]
+"38
+[; ;application.c: 38:     ccp_obj.ccp_pin.port = PORTC_INDEX;
+[e = . . _ccp_obj 3 0 -> . `E2951 2 `uc ]
+"39
+[; ;application.c: 39:     ccp_obj.ccp_pin.pin = GPIO_PIN2;
+[e = . . _ccp_obj 3 1 -> . `E2941 2 `uc ]
+"40
+[; ;application.c: 40:     ccp_obj.ccp_pin.direction = GPIO_DIRECTION_INPUT;
+[e = . . _ccp_obj 3 2 -> . `E2937 1 `uc ]
+"41
+[; ;application.c: 41:     ret = CCP_Init(&ccp_obj);
+[e = _ret ( _CCP_Init (1 -> &U _ccp_obj `*CS288 ]
+"43
+[; ;application.c: 43:     timer3_obj.TMR3_InterruptHandler = Timer3_DefaultInterruptHandler;
+[e = . _timer3_obj 0 &U _Timer3_DefaultInterruptHandler ]
+"44
+[; ;application.c: 44:     timer3_obj.timer3_mode = 0;
+[e = . _timer3_obj 4 -> -> 0 `i `uc ]
+"45
+[; ;application.c: 45:     timer3_obj.priority = INTERRUPT_LOW_PRIORITY;
+[e = . _timer3_obj 1 . `E3146 0 ]
+"46
+[; ;application.c: 46:     timer3_obj.timer3_prescaler_value = 0;
+[e = . _timer3_obj 3 -> -> 0 `i `uc ]
+"47
+[; ;application.c: 47:     timer3_obj.timer3_preload_value = 0;
+[e = . _timer3_obj 2 -> -> 0 `i `us ]
+"48
+[; ;application.c: 48:     timer3_obj.timer3_reg_wr_mode = 0;
+[e = . _timer3_obj 6 -> -> 0 `i `uc ]
+"49
+[; ;application.c: 49:     ret = Timer3_Init(&timer3_obj);
+[e = _ret ( _Timer3_Init (1 -> &U _timer3_obj `*CS292 ]
+"51
+[; ;application.c: 51:     while(1){
+[e :U 297 ]
 {
-"98
-[; ;application.c: 98:         ret = ADC_StartConversion(&adc_1);
-[e = _ret ( _ADC_StartConversion (1 -> &U _adc_1 `*CS282 ]
-"100
-[; ;application.c: 100:     }
+"53
+[; ;application.c: 53:     }
 }
-[e :U 284 ]
-[e $U 285  ]
-[e :U 286 ]
-"101
-[; ;application.c: 101:     return (0);
+[e :U 296 ]
+[e $U 297  ]
+[e :U 298 ]
+"54
+[; ;application.c: 54:     return (0);
 [e ) -> 0 `i ]
-[e $UE 283  ]
-"102
-[; ;application.c: 102: }
-[e :UE 283 ]
+[e $UE 295  ]
+"55
+[; ;application.c: 55: }
+[e :UE 295 ]
 }
-"107
-[; ;application.c: 107: void WelcomingMessage()
-[v _WelcomingMessage `(v ~T0 @X0 1 ef ]
-"108
-[; ;application.c: 108: {
-{
-[e :U _WelcomingMessage ]
-[f ]
-"109
-[; ;application.c: 109:     ret = lcd_4bit_send_string_pos(&lcd_1, 2, 7, "Welcome.");
-[e = _ret ( _lcd_4bit_send_string_pos (4 , , , -> &U _lcd_1 `*CS280 -> -> 2 `i `uc -> -> 7 `i `uc :s 2C ]
-"110
-[; ;application.c: 110:     _delay((unsigned long)((1000)*(4000000UL/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 4000000 `ul `d .4000.0 `ul ]
-"111
-[; ;application.c: 111:     ret = lcd_4bit_send_command(&lcd_1, 0X01);
-[e = _ret ( _lcd_4bit_send_command (2 , -> &U _lcd_1 `*CS280 -> -> 1 `i `uc ]
-"112
-[; ;application.c: 112: }
-[e :UE 287 ]
-}
-"114
-[; ;application.c: 114: void application_intialize()
+"57
+[; ;application.c: 57: void application_intialize(void){
 [v _application_intialize `(v ~T0 @X0 1 ef ]
-"115
-[; ;application.c: 115: {
 {
 [e :U _application_intialize ]
 [f ]
-"116
-[; ;application.c: 116:     ret = lcd_4bit_intialize(&lcd_1);
-[e = _ret ( _lcd_4bit_intialize (1 -> &U _lcd_1 `*CS280 ]
-"117
-[; ;application.c: 117:     ret = dc_motor_initialize(&motor_1);
-[e = _ret ( _dc_motor_initialize (1 -> &U _motor_1 `*CS277 ]
-"118
-[; ;application.c: 118:     ret = dc_motor_initialize(&motor_2);
-[e = _ret ( _dc_motor_initialize (1 -> &U _motor_2 `*CS277 ]
-"119
-[; ;application.c: 119:     ret = ADC_Init(&adc_1);
-[e = _ret ( _ADC_Init (1 -> &U _adc_1 `*CS282 ]
-"120
-[; ;application.c: 120: }
-[e :UE 288 ]
+"58
+[; ;application.c: 58:     Std_ReturnType ret = (Std_ReturnType)0x00;
+[v _ret `uc ~T0 @X0 1 a ]
+[e = _ret -> -> 0 `i `uc ]
+"59
+[; ;application.c: 59:     ecu_layer_intialize();
+[e ( _ecu_layer_intialize ..  ]
+"60
+[; ;application.c: 60: }
+[e :UE 299 ]
 }
-"123
-[; ;application.c: 123: void adcInterruptHandeler()
-[v _adcInterruptHandeler `(v ~T0 @X0 1 ef ]
-"124
-[; ;application.c: 124: {
-{
-[e :U _adcInterruptHandeler ]
-[f ]
-"125
-[; ;application.c: 125:     ret = ADC_GetConversionResult(&adc_1, &LM35);
-[e = _ret ( _ADC_GetConversionResult (2 , -> &U _adc_1 `*CS282 -> &U _LM35 `*us ]
-"126
-[; ;application.c: 126:     LM35 *= 0.4888f;
-[e =* _LM35 -> .0.4888 `f ]
-"127
-[; ;application.c: 127:     ret = convert_uint8_to_string(LM35, &adcArray);
-[e = _ret ( _convert_uint8_to_string (2 , -> _LM35 `uc -> &U _adcArray `*uc ]
-"128
-[; ;application.c: 128:     ret = lcd_4bit_send_string_pos(&lcd_1, 2, 18, &adcArray);
-[e = _ret ( _lcd_4bit_send_string_pos (4 , , , -> &U _lcd_1 `*CS280 -> -> 2 `i `uc -> -> 18 `i `uc -> &U _adcArray `*uc ]
-"129
-[; ;application.c: 129:     if(LM35 < 20)
-[e $ ! < -> _LM35 `ui -> -> 20 `i `ui 290  ]
-"130
-[; ;application.c: 130:     {
-{
-"131
-[; ;application.c: 131:         ret = dc_motor_move_right(&motor_1);
-[e = _ret ( _dc_motor_move_right (1 -> &U _motor_1 `*CS277 ]
-"132
-[; ;application.c: 132:         ret = dc_motor_move_left(&motor_2);
-[e = _ret ( _dc_motor_move_left (1 -> &U _motor_2 `*CS277 ]
-"133
-[; ;application.c: 133:     }
-}
-[e $U 291  ]
-"134
-[; ;application.c: 134:     else if(LM35 > 30)
-[e :U 290 ]
-[e $ ! > -> _LM35 `ui -> -> 30 `i `ui 292  ]
-"135
-[; ;application.c: 135:     {
-{
-"136
-[; ;application.c: 136:         ret = dc_motor_move_right(&motor_2);
-[e = _ret ( _dc_motor_move_right (1 -> &U _motor_2 `*CS277 ]
-"137
-[; ;application.c: 137:         ret = dc_motor_move_left(&motor_1);
-[e = _ret ( _dc_motor_move_left (1 -> &U _motor_1 `*CS277 ]
-"138
-[; ;application.c: 138:     }
-}
-[e $U 293  ]
-"139
-[; ;application.c: 139:     else
-[e :U 292 ]
-"140
-[; ;application.c: 140:     {
-{
-"141
-[; ;application.c: 141:         ret = dc_motor_stop(&motor_1);
-[e = _ret ( _dc_motor_stop (1 -> &U _motor_1 `*CS277 ]
-"142
-[; ;application.c: 142:         ret = dc_motor_stop(&motor_2);
-[e = _ret ( _dc_motor_stop (1 -> &U _motor_2 `*CS277 ]
-"143
-[; ;application.c: 143:     }
-}
-[e :U 293 ]
-[e :U 291 ]
-"144
-[; ;application.c: 144: }
-[e :UE 289 ]
-}
-[a 2C 87 101 108 99 111 109 101 46 0 ]
-[a 1C 84 101 109 112 101 114 97 116 117 114 101 32 105 115 32 58 32 0 ]
