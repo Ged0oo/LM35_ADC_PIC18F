@@ -1,8 +1,8 @@
 /* 
- * File:   application.h
- * Author: Ahmed.Elghafar
- * https://www.linkedin.com/in/ahmedabdelghafarmohammed/
- * Created on November 28, 2020, 9:53 PM
+ * File:   application.c
+ * Author: Mohamed_Nagy
+ * https://www.linkedin.com/in/mohamednagyofficial/
+ * Created on January 27, 2023, 8:41 PM
  */
 
 #ifndef APPLICATION_H
