@@ -11,7 +11,7 @@
     static volatile void (*TMR1_InterruptHandler)(void) = NULL;
 #endif
 static volatile uint16 timer1_preload = ZERO_INIT;
-
+ 
 static inline void Timer1_Mode_Select(const timer1_t *_timer);
 
 Std_ReturnType Timer1_Init(const timer1_t *_timer){
