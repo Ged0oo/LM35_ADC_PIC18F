@@ -30,7 +30,7 @@ Std_ReturnType Timer1_Init(const timer1_t *_timer){
 #if TIMER1_INTERRUPT_FEATURE_ENABLE==INTERRUPT_FEATURE_ENABLE 
         TIMER1_InterruptEnable();
         TIMER1_InterruptFlagClear();
-        TMR1_InterruptHandler = _timer->TMR1_InterruptHandler;
+        TMR1_InterruptHandler = _timer->TMR1_InterruptHandler; 
 /* Interrupt Priority Configurations */
 #if INTERRUPT_PRIORITY_LEVELS_ENABLE==INTERRUPT_FEATURE_ENABLE 
         INTERRUPT_PriorityLevelsEnable();
