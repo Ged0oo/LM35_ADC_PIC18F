@@ -25,7 +25,7 @@ Std_ReturnType Timer1_Init(const timer1_t *_timer){
         Timer1_Mode_Select(_timer);
         TMR1H = (_timer->timer1_preload_value) >> 8;
         TMR1L = (uint8)(_timer->timer1_preload_value);
-        timer1_preload = _timer->timer1_preload_value;
+        timer1_preload = _timer->timer1_preload_value; 
 /* Interrupt Configurations */        
 #if TIMER1_INTERRUPT_FEATURE_ENABLE==INTERRUPT_FEATURE_ENABLE 
         TIMER1_InterruptEnable();
